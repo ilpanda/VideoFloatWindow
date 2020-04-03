@@ -2,6 +2,7 @@ package com.ilpanda.floatwindow.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,16 +10,19 @@ import android.widget.Toast;
 import com.ilpanda.floatwindow.R;
 import com.ilpanda.floatwindow.view.FloatViewManager;
 import com.ilpanda.floatwindow.view.FloatWindowPermissionUtil;
+import com.ilpanda.floatwindow.view.ViewStateListener;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewStateListener {
+
+
+    private static final String TAG = "MainActivity";
 
     private TextView tvPermission;
     private TextView tvShow;
     private TextView tvDesktopShow;
-
 
     private static final int FLOAT_WINDOW_REQUEST_CODE = 1000;
 
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             hasPermission = true;
             tvPermission.setText("已经获取悬浮窗权限");
             FloatViewManager.getInstance().init(this);
+            FloatViewManager.getInstance().addViewStateListener(this);
         } else {
             hasPermission = false;
             tvPermission.setText("点击获取悬浮窗权限");
@@ -81,10 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.tv_show) {
             if (FloatWindowPermissionUtil.hasPermissionOnActivityResult(this)) {
                 if (FloatViewManager.getInstance().isShowing()) {
-                    tvShow.setText("点击显示");
                     FloatViewManager.getInstance().hide();
                 } else {
-                    tvShow.setText("点击隐藏");
                     FloatViewManager.getInstance().show();
                 }
             } else {
@@ -97,4 +100,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FloatViewManager.getInstance().removeViewStateListener(this);
+    }
+
+    @Override
+    public void onPositionUpdate(int x, int y) {
+        Log.i(TAG, "x : " + x + " y : " + y);
+    }
+
+    @Override
+    public void onShow() {
+        tvShow.setText("点击隐藏");
+        Log.i(TAG, "onShow");
+    }
+
+    @Override
+    public void onHide() {
+        tvShow.setText("点击显示");
+        Log.i(TAG, "onHide");
+    }
+
+    @Override
+    public void onDismiss() {
+
+    }
+
+    @Override
+    public void onMoveAnimStart() {
+        Log.i(TAG, "onMoveAnimStart");
+    }
+
+    @Override
+    public void onMoveAnimEnd() {
+        Log.i(TAG, "onMoveAnimEnd");
+    }
 }

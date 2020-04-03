@@ -68,8 +68,6 @@ public class FloatWindow {
         int gravity = Gravity.TOP | Gravity.START;
         int xOffset;
         int yOffset;
-        boolean mShow = true;
-        Class[] mActivities;
         int mSlideLeftMargin;
         int mSlideRightMargin;
         int mSlideTopMargin;
@@ -88,60 +86,47 @@ public class FloatWindow {
             mApplicationContext = applicationContext;
         }
 
-        public Builder setView(@NonNull View view) {
+        public Builder view(@NonNull View view) {
             mView = view;
             return this;
         }
 
-        public Builder setView(@LayoutRes int layoutId) {
+        public Builder view(@LayoutRes int layoutId) {
             mLayoutId = layoutId;
             return this;
         }
 
-        public Builder setWidth(int width) {
+        public Builder width(int width) {
             mWidth = width;
             return this;
         }
 
-        public Builder setHeight(int height) {
+        public Builder height(int height) {
             mHeight = height;
             return this;
         }
 
-        public Builder setWidth(int width, float ratio) {
+        public Builder width(int width, float ratio) {
             mWidth = (int) (width * ratio);
             return this;
         }
 
 
-        public Builder setHeight(int height, float ratio) {
+        public Builder height(int height, float ratio) {
             mHeight = (int) (height * ratio);
             return this;
         }
 
 
-        public Builder setX(int x) {
+        public Builder x(int x) {
             xOffset = x;
             return this;
         }
 
-        public Builder setY(int y) {
+        public Builder y(int y) {
             yOffset = y;
             return this;
         }
-
-        /**
-         * 设置 Activity 过滤器，用于指定在哪些界面显示悬浮窗，默认全部界面都显示
-         *
-         * @param show       　过滤类型,子类类型也会生效
-         * @param activities 　过滤界面
-         */
-        public Builder setFilter(boolean show, @NonNull Class... activities) {
-            mShow = show;
-            mActivities = activities;
-            return this;
-        }
-
 
         /**
          * @param slideLeftMargin
@@ -150,7 +135,7 @@ public class FloatWindow {
          * @param slideBottomMargin
          * @return
          */
-        public Builder setMargin(
+        public Builder margin(
                 int slideLeftMargin,
                 int slideRightMargin,
                 int slideTopMargin,
@@ -162,23 +147,23 @@ public class FloatWindow {
             return this;
         }
 
-        public Builder setViewClickListener(FloatViewClickListener mViewClickListener) {
+        public Builder viewClickListener(FloatViewClickListener mViewClickListener) {
             this.mViewClickListener = mViewClickListener;
             return this;
         }
 
-        public Builder setMoveStyle(long duration, @Nullable TimeInterpolator interpolator) {
+        public Builder setDuration(long duration, @Nullable TimeInterpolator interpolator) {
             mDuration = duration;
             mInterpolator = interpolator;
             return this;
         }
 
-        public Builder setTag(@NonNull String tag) {
+        public Builder tag(@NonNull String tag) {
             mTag = tag;
             return this;
         }
 
-        public Builder setViewStateListener(ViewStateListener listener) {
+        public Builder addViewStateListener(ViewStateListener listener) {
             mViewStateListener = listener;
             return this;
         }

@@ -53,14 +53,14 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         int height = width * 9 / 16;
 
         FloatWindow.with(applicationContext)
-                .setView(floatView)
-                .setWidth(width)  //悬浮窗宽度
-                .setHeight(height) // 悬浮窗高度
-                .setTag(TAG)
-                .setViewClickListener(floatView) // 为 floatView 设置了 GestureListener,监听触摸事件,处理单击和双击事件.
-                .setX(ScreenUtil.dipToPx(applicationContext, 6))
-                .setY(0)
-                .setMargin(ScreenUtil.dipToPx(applicationContext, 6),
+                .view(floatView)
+                .width(width)   // 悬浮窗宽度
+                .height(height) // 悬浮窗高度
+                .tag(TAG)
+                .viewClickListener(floatView) // 为 floatView 设置了 GestureListener,监听触摸事件,处理单击和双击事件.
+                .x(ScreenUtil.dipToPx(applicationContext, 6)) // 悬浮窗起始位置 x 方向偏移。
+                .y(0) // 悬浮窗起始位置 y 方向偏移，0 是从状态栏之下开始。
+                .margin(ScreenUtil.dipToPx(applicationContext, 6),
                         ScreenUtil.dipToPx(applicationContext, 6),
                         0,
                         ScreenUtil.dipToPx(applicationContext, 44))
@@ -182,6 +182,19 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         if (!showOnDesktop) {
             show();
         }
+    }
+
+    public void addViewStateListener(ViewStateListener listener) {
+        IFloatWindow iFloatWindow = FloatWindow.get(TAG);
+        if (iFloatWindow == null) return;
+
+        iFloatWindow.addViewStateListener(listener);
+    }
+
+    public void removeViewStateListener(ViewStateListener listener) {
+        IFloatWindow iFloatWindow = FloatWindow.get(TAG);
+        if (iFloatWindow == null) return;
+        iFloatWindow.removeViewStateListener(listener);
     }
 
 }
