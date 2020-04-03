@@ -129,10 +129,12 @@ public class FloatWindow {
         }
 
         /**
-         * @param slideLeftMargin
-         * @param slideRightMargin
-         * @param slideTopMargin
-         * @param slideBottomMargin
+         * 限定悬浮窗边界，左右超出边界会有回弹动画。
+         *
+         * @param slideLeftMargin   距离屏幕左侧边界
+         * @param slideRightMargin  距离屏幕右侧边界
+         * @param slideTopMargin    距离屏幕顶部边界
+         * @param slideBottomMargin 距离屏幕底部边界
          * @return
          */
         public Builder margin(
@@ -147,11 +149,23 @@ public class FloatWindow {
             return this;
         }
 
+        /**
+         * @param mViewClickListener 单击和双击悬浮窗时的处理
+         * @return
+         */
         public Builder viewClickListener(FloatViewClickListener mViewClickListener) {
             this.mViewClickListener = mViewClickListener;
             return this;
         }
 
+
+        /**
+         * 回调动画的时间
+         *
+         * @param duration
+         * @param interpolator
+         * @return
+         */
         public Builder setDuration(long duration, @Nullable TimeInterpolator interpolator) {
             mDuration = duration;
             mInterpolator = interpolator;

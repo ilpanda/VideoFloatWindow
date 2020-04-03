@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.ilpanda.floatwindow.manager.LifeRecycleManager;
 import com.ilpanda.floatwindow.ui.VideoPlayActivity;
+import com.ilpanda.floatwindow.utils.ScreenUtil;
 
 public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeRecycleManager.StateListener {
 
@@ -52,6 +53,11 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         int width = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
         int height = width * 9 / 16;
 
+        // 虚拟导航栏的高度
+        int navigationBarHeight = ScreenUtil.getNavigationBarSize(context).y;
+        // 状态栏的高度
+        int statusBarHeight = ScreenUtil.getStatusBarHeight(context);
+
         FloatWindow.with(applicationContext)
                 .view(floatView)
                 .width(width)   // 悬浮窗宽度
@@ -63,7 +69,7 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
                 .margin(ScreenUtil.dipToPx(applicationContext, 6),
                         ScreenUtil.dipToPx(applicationContext, 6),
                         0,
-                        ScreenUtil.dipToPx(applicationContext, 44))
+                        statusBarHeight)
                 .build();
     }
 

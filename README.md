@@ -37,12 +37,42 @@
 并且还能响应单击和双击事件则比较麻烦。我们知道原生 View 的点击事件是在 ACTION_UP 中触发的，自己实现 onTouchEvent 意味着要自己实现单击事件。因此我们可以借助 GestureDetector 来实现滑动、单击和双击事件的监听。
 
 
+---
+### 显示问题
+产品经理可能会要求切换到桌面时，控制悬浮窗的显示。或者进入到特定界面时，控制悬浮窗的显示。
+方法一： 
+1. 在每个特定页面加入逻辑判断，如果界面比较多的话，开发听了想打人。
+
+方法二：
+2. 项目中提供了 LifeRecycleManager 类，用于监听应用的生命周期，可在这个类中做单独的处理。切换到前台与后台的监听就是这个类中做的处理。
+
+
 
 ---
-### 说明
+### 范围显示
 悬浮窗默认的范围被限制在状态栏以下，虚拟导航栏以上。
 
 如果需要在状态栏也显示，需要将初始的 y 值设置为 -statusBarHeight，同时将 topMargin 设置为 -statusBarHeight。
+
+如果需要在虚拟导航栏显示，则 bottomMargin 需要再减去导航栏的高度。 
+
+范围显示可能定制化的需求比较多，具体的逻辑代码在 IFloatWindowImpl 的 initTouchEvent 方法中的 onScroll 方法里。
+
+虎牙的处理是在自己应用内，显示在虚拟导航栏以上，切换到桌面或者是其他应用，则可以显示在导航栏之上，这里没有完全按照虎牙来做。
+
+虚拟导航栏的高度和状态栏的高度方法内都有提供：
+```
+       // 虚拟导航栏的高度
+        int navigationBarHeight = ScreenUtil.getNavigationBarSize(context).y;
+        // 状态栏的高度
+        int statusBarHeight = ScreenUtil.getStatusBarHeight(context);
+```
+
+
+---
+### 注意事项
+如果你单独在 Activity 中注册了一些监听 Listener 的话。一定要在 onDestroy 中取消注册监听。
+
 
 
 ---

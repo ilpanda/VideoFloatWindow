@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 
+import com.ilpanda.floatwindow.utils.ScreenUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 

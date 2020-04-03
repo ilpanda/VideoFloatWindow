@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
 
-
         checkFloatWindowPermission();
     }
 
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tvPermission.setText("已经获取悬浮窗权限");
             FloatViewManager.getInstance().init(this);
             FloatViewManager.getInstance().addViewStateListener(this);
+            FloatViewManager.getInstance().show();
         } else {
             hasPermission = false;
             tvPermission.setText("点击获取悬浮窗权限");
