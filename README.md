@@ -45,7 +45,7 @@
 
 ---
 ### 双击缩放问题
-在 IFloatWindowImpl 的 scale 方法中。
+双击具体缩放的比例在 IFloatWindowImpl 的 scale 方法中。
 
 
 
