@@ -29,22 +29,19 @@
     <!--悬浮窗权限-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 ```
-<font color=red>如果用户没有授权，直接显示悬浮窗，会直接崩溃。因此这里务必要小心、谨慎</font>
-
-同时由于国内手机类型众多，跳转到授权界面需要兼容适配。
+<font color=red>如果用户没有授权，直接显示悬浮窗，会直接崩溃。因此这里务必要小心、谨慎。同时由于国内手机类型众多，跳转到授权界面需要兼容适配。</font>
 
 2. 滑动：熟悉 View 触摸事件的同学一定都知道，想要实现一个 View 随着手指的滑动而滑动很简单，重写 View 的 onTouchEvent 或者设置 onTouchListener 即可。但是要实现一个 View 不仅能随着 View 滑动，
-并且还能响应单击和双击事件则比较麻烦。我们知道原生 View 的点击事件是在 ACTION_UP 中触发的，自己实现 onTouchEvent 意味着要自己实现单击事件。因此我们可以借助 GestureDetector 来实现滑动、单击和双击事件的监听。
+并且还能响应单击和双击事件，则比较麻烦。我们知道原生 View 的点击事件是在 ACTION_UP 中触发的，自己实现 onTouchEvent 意味着要自己实现单击事件。因此我们可以借助 GestureDetector 来实现滑动、单击和双击事件的监听。
 
 
 ---
 ### 显示问题
 产品经理可能会要求切换到桌面时，控制悬浮窗的显示。或者进入到特定界面时，控制悬浮窗的显示。
-方法一： 
-1. 在每个特定页面加入逻辑判断，如果界面比较多的话，开发听了想打人。
 
-方法二：
-2. 项目中提供了 LifeRecycleManager 类，用于监听应用的生命周期，可在这个类中做单独的处理。切换到前台与后台的监听就是这个类中做的处理。
+方法一：在每个特定页面加入逻辑判断，如果界面比较多的话，开发听了想打人。
+
+方法二：项目中提供了 LifeRecycleManager 类，用于监听应用的生命周期，可在这个类中根据当前 Activity 的类型做单独的处理。切换到前台与后台的监听就是这个类中做的处理。
 
 
 
@@ -71,7 +68,7 @@
 
 ---
 ### 注意事项
-如果你单独在 Activity 中注册了一些监听 Listener 的话。一定要在 onDestroy 中取消注册监听。
+如果你在 Activity 中注册了一些监听 Listener 的话。一定要在 onDestroy 中取消注册监听。
 
 
 
@@ -82,4 +79,7 @@
 
 ---
 ### 最后
+如果本项目不满足你的需求，欢迎提 issue，也可以参考其他项目：
 
+https://github.com/princekin-f/EasyFloat
+https://github.com/fenggit/FloatWindow
