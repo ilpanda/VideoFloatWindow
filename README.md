@@ -43,6 +43,10 @@
 
 方法二：项目中提供了 LifeRecycleManager 类，用于监听应用的生命周期，可在这个类中根据当前 Activity 的类型做单独的处理。切换到前台与后台的监听就是这个类中做的处理。
 
+---
+### 双击缩放问题
+在 IFloatWindowImpl 的 scale 方法中。
+
 
 
 ---

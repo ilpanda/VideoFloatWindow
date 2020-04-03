@@ -321,21 +321,24 @@ public class IFloatWindowImpl extends IFloatWindow {
         int newHeight = 0;
 
         int initWidth = mBuilder.mWidth;
+        int initHeight = mBuilder.mHeight;
         if (currentScaleType == ScaleType.MIN) {
             newScale = ScaleType.MEDIUM;
             newWidth = (int) (initWidth * 1.37);
+            newHeight = (int) (initHeight * 1.37);
         } else if (currentScaleType == ScaleType.MEDIUM) {
             newScale = ScaleType.MAX;
             newWidth = (int) (initWidth * 1.67);
+            newHeight = (int) (initHeight * 1.67);
         } else if (currentScaleType == ScaleType.MAX) {
             newScale = ScaleType.MIN;
             newWidth = initWidth;
+            newHeight = initHeight;
         }
 
         int maxWidth = ScreenUtil.getScreenWidth(mBuilder.mApplicationContext) - mBuilder.mSlideLeftMargin - mBuilder.mSlideRightMargin;
 
         newWidth = Math.min(maxWidth, newWidth);
-        newHeight = newWidth * 9 / 16;
 
         currentScaleType = newScale;
         mFloatView.updateSize(newWidth, newHeight);
