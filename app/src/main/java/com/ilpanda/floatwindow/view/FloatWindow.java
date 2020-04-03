@@ -160,7 +160,7 @@ public class FloatWindow {
 
 
         /**
-         * 回调动画的时间
+         * 回弹动画的时间
          *
          * @param duration
          * @param interpolator
