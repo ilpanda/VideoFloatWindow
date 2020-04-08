@@ -151,7 +151,7 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         Activity topActivity = LifeRecycleManager.getInstance().getTopActivity();
         if (topActivity != null) {
             Intent intent = new Intent(topActivity, VideoPlayActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             topActivity.startActivity(intent);
         }
     }
