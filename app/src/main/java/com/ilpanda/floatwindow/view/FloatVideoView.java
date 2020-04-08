@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.ilpanda.floatwindow.R;
@@ -15,16 +14,12 @@ public class FloatVideoView extends RelativeLayout implements View.OnClickListen
 
     private static final String TAG = "LiveFloatView";
 
-    private Context context;
-
-    private ImageView mIvMute;
-    private ProgressBar mProgressBar;
+    private Context mContext;
 
     private FloatViewListener mListener;
 
-    private FloatViewClickListener floatViewClickListener;
-
-    private boolean mMute = false;
+    private ImageView mIvMute;   // 是否静音图片
+    private boolean mMute = false; // 是否静音
 
     public FloatVideoView(Context context) {
         super(context);
@@ -48,7 +43,7 @@ public class FloatVideoView extends RelativeLayout implements View.OnClickListen
 
 
     private void init(Context context) {
-        this.context = context;
+        this.mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_float_palyer, this, true);
         ImageView ivClose = view.findViewById(R.id.iv_close);
         mIvMute = view.findViewById(R.id.iv_mute);
