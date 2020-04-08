@@ -55,6 +55,7 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
 
         // 虚拟导航栏的高度
         int navigationBarHeight = ScreenUtil.getNavigationBarSize(context).y;
+
         // 状态栏的高度
         int statusBarHeight = ScreenUtil.getStatusBarHeight(context);
 

@@ -21,6 +21,26 @@ public class FloatWindowPermissionUtil {
 
     private static final String TAG = "FloatWindowPermissionUt";
 
+
+    public static boolean hasPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(context);
+        } else {
+            return hasPermissionBelowMarshmallow(context);
+        }
+    }
+
+
+    /**
+     * 用户授权成功后，返回到应用时，会调用 onActivityResult。
+     * 在 小米 Note2 手机 Android 8 的系统上发现：当授权成功后返回，此时 Settings.canDrawOverlays(context) 会返回 false。
+     * 解决方案有两个：
+     * 1. 在 onActivityResult 中延迟调用 Settings.canDrawOverlays(context) 方法，例如延迟 500 ms。
+     * 2. 在 onActivityResult 中直接调用 hasPermissionOnActivityResult。
+     *
+     * @param context
+     * @return
+     */
     public static boolean hasPermissionOnActivityResult(Context context) {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
             return hasPermissionForO(context);
@@ -81,11 +101,6 @@ public class FloatWindowPermissionUtil {
             intent.setData(Uri.parse("package:" + activity.getPackageName()));
             activity.startActivityForResult(intent, requestCode);
         }
-    }
-
-
-    public static boolean shouldShowFloatWindow(Context context) {
-        return hasPermissionOnActivityResult(context);
     }
 
 }

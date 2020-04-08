@@ -273,7 +273,7 @@ public class IFloatWindowImpl extends IFloatWindow {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    gestureDetector.onUp(v, event);
+                    gestureDetector.onActionUp(v, event);
                 }
                 return gestureDetector.onTouchEvent(event);
             }
@@ -293,7 +293,7 @@ public class IFloatWindowImpl extends IFloatWindow {
             super(context, listener, handler, unused);
         }
 
-        public void onUp(View v, MotionEvent event) {
+        public void onActionUp(View v, MotionEvent event) {
             upX = event.getRawX();
             upY = event.getRawY();
             mBuilder.mView.post(new Runnable() {

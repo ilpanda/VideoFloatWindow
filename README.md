@@ -1,27 +1,14 @@
 ### 声明
-本项目是基于一个[开源项目](https://github.com/yhaolpz/FloatWindow) 的源码改造而来，因为作者已经不维护了，并且功能实现和视频悬浮窗有一定的差别，我另开了一个项目，并删除修改了部分源码，
-但是项目文件的文件头中，仍然保留原作者的信息：
-```
-/**
- * Created by yhao on 2017/12/22.
- * https://github.com/yhaolpz
- */
-```
+本项目是基于一个[开源项目](https://github.com/yhaolpz/FloatWindow) 的源码改造而来，因为作者已经不维护了，并且功能实现和视频悬浮窗有一定的差别，我另开了一个项目，并删除修改了部分源码，但是项目文件的文件头中，仍然保留原作者的信息：
 
 ---
-### 引用
-> https://github.com/yhaolpz/FloatWindow
-
----
-### 说明
-本项目仅仅实现了悬浮窗功能，没有实现视频播放功能，因为视频播放的实现方案比较多，有的使用原生的、有的使用腾讯云、阿里云、七牛云等第三方的。
-
-
-
+### 本项目地址
+https://github.com/ilpanda/VideoFloatWindow
 
 ---
 ### 前言
-最近视频直播比较火,项目需要一个视频播放悬浮窗功能,产品经理要求实现虎牙的悬浮窗。
+最近视频直播比较火,项目需要一个视频播放悬浮窗功能,产品经理要求实现虎牙的悬浮窗。本项目仅仅实现了悬浮窗功能，没有实现视频播放功能，因为视频播放的实现方案比较多，有的使用原生的、有的使用腾讯云、阿里云、七牛云等第三方的。
+
 
 分析下需求，视频悬浮窗功能在实现上主要有以下几个特点：
 
@@ -37,8 +24,7 @@
 ```
 <font color=red>如果用户没有授权，直接显示悬浮窗，会直接崩溃。因此这里务必要小心、谨慎。同时由于国内手机类型众多，跳转到授权界面需要兼容适配。</font>
 
-2. 滑动：熟悉 View 触摸事件的同学一定都知道，想要实现一个 View 随着手指的滑动而滑动很简单，重写 View 的 onTouchEvent 或者设置 onTouchListener 即可。但是要实现一个 View 不仅能随着 View 滑动，
-并且还能响应单击和双击事件，则比较麻烦。我们知道原生 View 的点击事件是在 ACTION_UP 中触发的，自己实现 onTouchEvent 意味着要自己实现单击事件。因此我们可以借助 GestureDetector 来实现滑动、单击和双击事件的监听。
+2. 滑动：熟悉 View 触摸事件的同学一定都知道，想要实现一个 View 随着手指的滑动而滑动很简单，重写 View 的 onTouchEvent 或者设置 onTouchListener 即可。但是要实现一个 View 不仅能随着 View 滑动，并且还能响应单击和双击事件，则比较麻烦。我们知道原生 View 的点击事件是在 ACTION_UP 中触发的，自己实现 onTouchEvent 意味着要自己实现单击事件。因此我们可以借助 GestureDetector 来实现滑动、单击和双击事件的监听。
 
 
 ---
@@ -50,8 +36,9 @@
 方法二：项目中提供了 LifeRecycleManager 类，用于监听应用的生命周期，可在这个类中根据当前 Activity 的类型做单独的处理。切换到前台与后台的监听就是这个类中做的处理。
 
 ---
-### 双击缩放问题
-双击具体缩放的比例在 IFloatWindowImpl 的 scale 方法中。
+### 双击缩放
+视频悬浮窗不能太大也不能太小，因此往往提供了双击缩放功能。项目中，悬浮窗的默认大小为屏幕宽度的 60%。
+
 
 
 
@@ -75,6 +62,37 @@
         int statusBarHeight = ScreenUtil.getStatusBarHeight(context);
 ```
 
+---
+### 授权
+在显示悬浮窗之前，往往需要判断是否已经获取悬浮窗权限，因此可以使用 FloatWindowPermissionUtil 类中的代码：
+```
+    public static boolean hasPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(context);
+        } else {
+            return hasPermissionBelowMarshmallow(context);
+        }
+    }
+```
+
+用户授权成功后，返回到应用时，会调用 onActivityResult。
+在 小米 Note2 手机 Android 8 的系统上发现：当授权成功后返回，此时 Settings.canDrawOverlays(context) 会返回 false。解决方案有两个：
+1. 在 onActivityResult 中，延迟调用 Settings.canDrawOverlays(context) 方法，例如延迟 500 ms。
+2. 在 onActivityResult 中直接调用 hasPermissionOnActivityResult。
+
+```
+    public static boolean hasPermissionOnActivityResult(Context context) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+            return hasPermissionForO(context);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(context);
+        } else {
+            return hasPermissionBelowMarshmallow(context);
+        }
+    }
+```
+
 
 ---
 ### 注意事项
@@ -84,7 +102,7 @@
 
 ---
 ### 实现效果
-![](doc/demo.gif)
+![](http://img.hi-cat.cn/a0e596756faa1e71353daa0d183c6e39)
 
 
 ---

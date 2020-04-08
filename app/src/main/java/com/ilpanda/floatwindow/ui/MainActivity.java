@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean checkFloatWindowPermission() {
-        if (FloatWindowPermissionUtil.hasPermissionOnActivityResult(this)) {
+        if (FloatWindowPermissionUtil.hasPermission(this)) {
             hasPermission = true;
             tvPermission.setText("已经获取悬浮窗权限");
             FloatViewManager.getInstance().init(this);
