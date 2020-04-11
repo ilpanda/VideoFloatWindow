@@ -52,11 +52,13 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         floatView.setVisibility(View.GONE); // 默认隐藏悬浮窗
         floatView.setListener(this);
 
-//        int width = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
-//        int height = width * 9 / 16;
+        // 适用于横屏视频 16 : 9
+        int width = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
+        int height = width * 9 / 16;
 
-        int height = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
-        int width = height * 9 / 16;
+//        适用于竖屏视频
+//        int height = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
+//        int width = height * 9 / 16;
 
         // 虚拟导航栏的高度
         int navigationBarHeight = ScreenUtil.getNavigationBarSize(context).y;
@@ -66,10 +68,11 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
 
         FloatWindow.with(applicationContext)
                 .view(floatView)
-                .width(width)   // 悬浮窗宽度
-                .height(height) // 悬浮窗高度
+                .width(width)                 // 悬浮窗宽度
+                .height(height)               // 悬浮窗高度
                 .tag(TAG)
-                .moveType(MoveType.SLIDE)
+                .moveType(MoveType.SLIDE)     // 手指松开时的动画效果
+                .duration(300)                // 手指松开时的动画持续时间
                 .viewClickListener(floatView) // 为 floatView 设置了 GestureListener,监听触摸事件,处理单击和双击事件.
                 .x(ScreenUtil.dipToPx(applicationContext, 6)) // 悬浮窗起始位置 x 方向偏移。
                 .y(0) // 悬浮窗起始位置 y 方向偏移，0 是从状态栏之下开始。

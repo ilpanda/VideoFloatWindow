@@ -168,11 +168,23 @@ public class FloatWindow {
         /**
          * 回弹动画的时间
          *
-         * @param duration
+         * @param duration 单位毫秒
+         * @return
+         */
+        public Builder duration(long duration) {
+            mDuration = duration;
+            return this;
+        }
+
+
+        /**
+         * 回弹动画的时间和动画插值器
+         *
+         * @param duration 单位毫秒
          * @param interpolator
          * @return
          */
-        public Builder setDuration(long duration, @Nullable TimeInterpolator interpolator) {
+        public Builder duration(long duration, @Nullable TimeInterpolator interpolator) {
             mDuration = duration;
             mInterpolator = interpolator;
             return this;
