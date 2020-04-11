@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ilpanda.floatwindow.R;
-import com.ilpanda.floatwindow.view.FloatViewManager;
+import com.ilpanda.floatwindow.manager.FloatViewManager;
 import com.ilpanda.floatwindow.view.FloatWindowPermissionUtil;
 import com.ilpanda.floatwindow.view.ViewStateListener;
 

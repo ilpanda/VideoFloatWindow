@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 
+import com.ilpanda.floatwindow.manager.FloatViewManager;
 import com.ilpanda.floatwindow.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -106,12 +107,12 @@ public class IFloatWindowImpl extends IFloatWindow {
     }
 
     @Override
-    void addViewStateListener(ViewStateListener listener) {
+    public void addViewStateListener(ViewStateListener listener) {
         mViewStateListeners.add(listener);
     }
 
     @Override
-    void removeViewStateListener(ViewStateListener listener) {
+    public void removeViewStateListener(ViewStateListener listener) {
         mViewStateListeners.remove(listener);
     }
 
@@ -144,6 +145,9 @@ public class IFloatWindowImpl extends IFloatWindow {
         return mBuilder.mView;
     }
 
+    /**
+     * @param hideOnAnimatorEnd true: 动画结束后,对悬浮进行隐藏. false : 动画结束后,不隐藏悬浮窗
+     */
     private void startAnimator(final boolean hideOnAnimatorEnd) {
         if (mBuilder.mInterpolator == null) {
             if (mDecelerateInterpolator == null) {
@@ -207,6 +211,32 @@ public class IFloatWindowImpl extends IFloatWindow {
             });
             startAnimator(hideOnAnimatorEnd);
         }
+    }
+
+    private void slideBack(View view) {
+
+        int startX = mFloatView.getX();
+        int centPoint = ScreenUtil.getScreenWidth(mBuilder.mApplicationContext) / 2;
+
+        int endX = 0;
+        if ((startX + (view.getWidth() / 2) <= centPoint)) {
+            endX = mBuilder.mSlideLeftMargin;
+        } else {
+            endX = ScreenUtil.getScreenWidth(mBuilder.mApplicationContext) - mBuilder.mSlideRightMargin - view.getWidth();
+        }
+
+        mAnimator = ObjectAnimator.ofInt(startX, endX);
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int x = (int) animation.getAnimatedValue();
+                mFloatView.updateX(x);
+                for (ViewStateListener listener : mViewStateListeners) {
+                    listener.onPositionUpdate(x, (int) upY);
+                }
+            }
+        });
+        startAnimator(false);
     }
 
 
@@ -299,7 +329,11 @@ public class IFloatWindowImpl extends IFloatWindow {
             mBuilder.mView.post(new Runnable() {
                 @Override
                 public void run() {
-                    moveBack(mBuilder.mView);
+                    if (mBuilder.moveType == MoveType.SLIDE) {
+                        slideBack(mBuilder.mView);
+                    } else {
+                        moveBack(mBuilder.mView);
+                    }
                 }
             });
         }

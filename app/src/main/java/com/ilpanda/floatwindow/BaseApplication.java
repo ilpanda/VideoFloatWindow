@@ -2,8 +2,8 @@ package com.ilpanda.floatwindow;
 
 import android.app.Application;
 
+import com.ilpanda.floatwindow.manager.FloatViewManager;
 import com.ilpanda.floatwindow.manager.LifeRecycleManager;
-import com.ilpanda.floatwindow.view.FloatViewManager;
 
 public class BaseApplication extends Application {
 

@@ -28,7 +28,7 @@ public abstract class IFloatWindow {
 
     abstract void dismiss();
 
-    abstract void addViewStateListener(ViewStateListener viewStateListener);
+    public abstract void addViewStateListener(ViewStateListener viewStateListener);
 
-    abstract void removeViewStateListener(ViewStateListener viewStateListener);
+    public abstract void removeViewStateListener(ViewStateListener viewStateListener);
 }

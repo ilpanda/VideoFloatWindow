@@ -77,6 +77,7 @@ public class FloatWindow {
         private String mTag = mDefaultTag;
         ViewStateListener mViewStateListener;
         FloatViewClickListener mViewClickListener;
+        MoveType moveType = MoveType.DEFAULT;
 
         private Builder() {
 
@@ -84,6 +85,11 @@ public class FloatWindow {
 
         Builder(Context applicationContext) {
             mApplicationContext = applicationContext;
+        }
+
+        public Builder moveType(MoveType moveType) {
+            this.moveType = moveType;
+            return this;
         }
 
         public Builder view(@NonNull View view) {

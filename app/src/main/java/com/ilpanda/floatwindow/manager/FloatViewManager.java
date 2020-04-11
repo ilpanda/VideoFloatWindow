@@ -1,4 +1,4 @@
-package com.ilpanda.floatwindow.view;
+package com.ilpanda.floatwindow.manager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ilpanda.floatwindow.manager.LifeRecycleManager;
 import com.ilpanda.floatwindow.ui.VideoPlayActivity;
 import com.ilpanda.floatwindow.utils.ScreenUtil;
+import com.ilpanda.floatwindow.view.FloatVideoView;
+import com.ilpanda.floatwindow.view.FloatWindow;
+import com.ilpanda.floatwindow.view.IFloatWindow;
+import com.ilpanda.floatwindow.view.MoveType;
+import com.ilpanda.floatwindow.view.ViewStateListener;
 
 public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeRecycleManager.StateListener {
 
@@ -48,10 +52,11 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
         floatView.setVisibility(View.GONE); // 默认隐藏悬浮窗
         floatView.setListener(this);
 
-        // 因为该悬浮窗主要用于播放横屏视频,设置默认宽度为屏幕宽度的 60%
-        // 将比例调整为 宽:高 = 16:9
-        int width = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
-        int height = width * 9 / 16;
+//        int width = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
+//        int height = width * 9 / 16;
+
+        int height = (int) (ScreenUtil.getScreenWidth(applicationContext) * 0.6);
+        int width = height * 9 / 16;
 
         // 虚拟导航栏的高度
         int navigationBarHeight = ScreenUtil.getNavigationBarSize(context).y;
@@ -64,6 +69,7 @@ public class FloatViewManager implements FloatVideoView.FloatViewListener, LifeR
                 .width(width)   // 悬浮窗宽度
                 .height(height) // 悬浮窗高度
                 .tag(TAG)
+                .moveType(MoveType.SLIDE)
                 .viewClickListener(floatView) // 为 floatView 设置了 GestureListener,监听触摸事件,处理单击和双击事件.
                 .x(ScreenUtil.dipToPx(applicationContext, 6)) // 悬浮窗起始位置 x 方向偏移。
                 .y(0) // 悬浮窗起始位置 y 方向偏移，0 是从状态栏之下开始。
