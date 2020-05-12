@@ -1,5 +1,5 @@
 ### 声明
-本项目是基于一个[开源项目](https://github.com/yhaolpz/FloatWindow) 的源码改造而来，因为作者已经不维护了，并且功能实现和视频悬浮窗有一定的差别，我另开了一个项目，并删除修改了部分源码，但是项目文件的文件头中，仍然保留原作者的信息：
+本项目是基于[开源项目](https://github.com/yhaolpz/FloatWindow) 改造而来，原作者已经不维护，功能实现和视频悬浮窗有一定的差别，因此重开一个项目，修改部分源码。项目文件的文件头中，仍然保留原作者的信息。
 
 ---
 ### 本项目地址
@@ -38,9 +38,6 @@ https://github.com/ilpanda/VideoFloatWindow
 ---
 ### 双击缩放
 视频悬浮窗不能太大也不能太小，因此往往提供了双击缩放功能。项目中，悬浮窗的默认大小为屏幕宽度的 60%。
-
-
-
 
 ---
 ### 范围显示
@@ -98,12 +95,9 @@ https://github.com/ilpanda/VideoFloatWindow
 ### 注意事项
 如果你在 Activity 中注册了一些监听 Listener 的话。一定要在 onDestroy 中取消注册监听。
 
-
-
 ---
 ### 实现效果
 ![](http://img.hi-cat.cn/a0e596756faa1e71353daa0d183c6e39)
-
 
 ---
 ### 最后
